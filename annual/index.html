@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/x-icon" href="asset/logo-bjb.png">
+<title>Annual Report - Bank BJB</title>
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/zoom.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+
+<!-- <canvas id="networkCanvas"></canvas> -->
+
+<!-- BSI Yellow Header Bar -->
+<header class="bsi-header">
+  <div class="bsi-header-container">
+    <!-- Branding / Logo -->
+    <div class="bsi-logo-section">
+      <span class="bsi-brand-title">Laporan Tahunan 2026 |</span>
+
+        <div class="header-logo">
+            <img src="asset/M-BRI-logo.png" alt="Bank Logo">
+        </div>
+
+        <div class="bsi-page-counter">
+            <span class="counterPage">pages : </span>
+            <input type="text" id="headerPageInput" value="1" />
+            <span id="headerTotalPages"></span>
+        </div>
+    </div>
+    
+    
+
+    <!-- Toolbar Utama -->
+    <div class="bsi-toolbar">
+         
+      
+
+        <!-- <button id="headerNextBtn" class="bsi-btn" title="Halaman Selanjutnya">
+            <i class="fas fa-chevron-right"></i>
+        </button> -->
+      
+        <button id="headerSearchBtn" class="bsi-btn bsi-btn-search" title="Cari Halaman / Teks">
+            <i class="fas fa-search fa-1x"></i> 
+        </button>
+
+        <!-- Search Sidebar Kanan (Gaya BSI) -->
+        <div id="searchSidebar" class="search-sidebar">
+            <div class="search-sidebar-header">
+                <div class="search-sidebar-title">
+                <i class="fas fa-search"></i>
+                <span>Search</span>
+                </div>
+                <button id="closeSearch" class="search-close-btn">&times;</button>
+            </div>
+
+            <div class="search-sidebar-body">
+                <!-- Input Box dengan Tombol Hapus (x) -->
+                <div class="search-input-wrapper">
+                <input type="text" id="searchInput" placeholder="Cari kata kunci..." autocomplete="off" />
+                <button id="clearSearchInput" class="clear-input-btn">&times;</button>
+                </div>
+
+                <!-- Info Jumlah Halaman / Hasil Ditemukan -->
+                <div id="searchStatus" class="search-status-info"></div>
+
+                <!-- Daftar Hasil Pencarian (Grouped per halaman) -->
+                <div id="searchResultsList" class="search-results-container"></div>
+            </div>
+            </div>
+
+        <!-- Backdrop Semi-Transparan (Opsional untuk Mobile) -->
+        <div id="searchBackdrop" class="search-backdrop"></div>
+
+        
+    </div>
+  </div>
+  
+</header>
+
+
+
+<div id="initialLoader">
+
+    <div class="loader-content">
+
+        <svg
+            class="loader-icon"
+            viewBox="0 0 24 24">
+
+            <path
+                fill="currentColor"
+                d="M19 2H8c-1.1 0-2 .9-2 2v4H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2v-4h1c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 18H5V10h11v10zm3-6h-1v-4c0-1.1-.9-2-2-2H8V4h11v10z"/>
+        </svg>
+
+        <div class="loader-title">
+            Loading Annual Report
+        </div>
+
+    </div>
+
+</div>
+
+<div id="pageLoader">
+    <div class="loader-card">
+
+        <div class="loader-book">
+            <div class="loader-page"></div>
+            <div class="loader-page"></div>
+        </div>
+
+        <div class="loader-text" id="loaderText">
+            Loading page...
+        </div>
+
+        <div class="loader-progress">
+            <div id="loaderProgress"></div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="viewer">
+
+    <div class="mobile-language-switcher" style="display: none;">
+
+        <button
+            class="lang-btn "
+            data-lang="id">
+            ID
+        </button>
+
+        <button
+            class="lang-btn"
+            data-lang="en">
+            EN
+        </button>
+
+    </div>
+
+    <div class="nav-btn nav-prev" id="prev">
+        &#10094;
+    </div>
+
+    <div class="nav-btn nav-next" id="next">
+        &#10095;
+    </div>
+
+    <div id="book"></div>
+
+    <div class="desktop-toolbar">
+
+        <button id="tocButton">
+
+            <span class="toc-icon">
+                <i class="fa fa-bars fa-1x" aria-hidden="true"></i>
+            </span>
+
+            <!-- <span class="toc-label">
+                List Of Contents
+            </span> -->
+
+        </button>
+
+        <div class="toolbar-divider"></div>
+
+        <button id="firstPageBtn">
+            ⏮
+        </button>
+
+        <button id="pagePrev">
+            &#10094;
+        </button>
+
+        <!-- <input
+            id="pageInput"
+            type="number"
+            min="1"
+            value="1">
+
+        <span id="totalPages">
+            / 0
+        </span> -->
+
+        <button id="pageNext">
+            &#10095;
+        </button>
+
+        <button id="lastPageBtn">
+            ⏭
+        </button>
+
+        <div class="toolbar-divider"></div>
+
+        <!-- <div class="language-switcher" style="display: none;">
+
+            <button
+                class="lang-btn "
+                data-lang="id">
+                ID
+            </button>
+
+            <button
+                class="lang-btn"
+                data-lang="en">
+                EN
+            </button>
+
+        </div> -->
+
+        <div class="toolbar-divider" style="display: none;"></div>
+
+        <button id="zoomOut">
+
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none">
+
+                <circle
+                    cx="11"
+                    cy="11"
+                    r="7"
+                    stroke="currentColor"
+                    stroke-width="2"/>
+
+                <path
+                    d="M8 11H14"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+
+                <path
+                    d="M20 20L17 17"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+
+            </svg>
+
+        </button>
+
+        <!-- <span id="zoomValue">100%</span> -->
+
+        <button id="zoomIn">
+
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none">
+
+                <circle
+                    cx="11"
+                    cy="11"
+                    r="7"
+                    stroke="currentColor"
+                    stroke-width="2"/>
+
+                <path
+                    d="M11 8V14"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+
+                <path
+                    d="M8 11H14"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+
+                <path
+                    d="M20 20L17 17"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+
+            </svg>
+
+        </button>
+
+        <div class="toolbar-divider"></div>
+
+        <button id="fullscreenBtn" title="Fullscreen">
+
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none">
+
+                <path
+                    d="M8 3H3V8"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+
+                <path
+                    d="M16 3H21V8"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+
+                <path
+                    d="M21 16V21H16"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+
+                <path
+                    d="M8 21H3V16"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+
+            </svg>
+
+        </button>
+        <button id="downloadBtn" title="Download PDF">
+
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+
+                <path
+                    d="M12 3V15"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+
+                <path
+                    d="M7 10L12 15L17 10"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+
+                <path
+                    d="M4 20H20"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+
+            </svg>
+
+        </button>
+
+    </div>
+
+    <div class="mobile-toolbar">
+
+        <button id="mobileToc">
+
+            ☰
+
+        </button>
+
+        <button id="mobilePrev">
+            &#10094;
+        </button>
+
+        <input
+            type="number"
+            id="mobilePageInput">
+
+        <span id="mobileTotalPages">
+            / 0
+        </span>
+
+        <button id="mobileNext">
+            &#10095;
+        </button>
+
+        <div class="divider"></div>
+
+        <button id="mobileZoomOut">
+            🔍
+        </button>
+
+        <button id="mobileZoomIn">
+            🔍
+        </button>
+
+        <button id="mobileFullscreen">
+            ⛶
+        </button>
+
+        <button id="mobileDownload">
+            ⬇
+        </button>
+
+    </div>
+
+    <div id="leftThickness" class="book-thickness"></div>
+    <div id="rightThickness" class="book-thickness"></div>
+    
+</div>
+
+<div id="tocButton">
+    <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none">
+
+    <path
+        d="M4 6H20M4 12H20M4 18H20"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"/>
+
+    </svg>
+</div>
+
+<div id="tocOverlay">
+
+    <div id="tocPanel">
+
+        <div class="toc-actions">
+
+            <div id="tocFirstPage" class="toc-item">
+                🏠 Cover Page
+            </div>
+
+            <div id="tocLastPage" class="toc-item">
+                📖 Last Page
+            </div>
+
+        </div>
+
+        <div class="toc-header">
+
+            <span>
+                List of Contents
+            </span>
+
+            <button id="closeToc">
+                ✕
+            </button>
+
+        </div>
+
+        <div id="tocSidebar">
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Watermark / Logo Kanan Bawah -->
+<div class="footer-logo">
+    <img src="asset/Bank-Rakyat-Indonesia-Logo.png" alt="Bank Logo">
+</div>
+
+<div id="pages-container" style="display:none"></div>
+
+<!-- <script src="js/canvas.min.js"></script> -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

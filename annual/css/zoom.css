@@ -1,0 +1,167 @@
+/* Container Modal Zoom Overlay */
+.zoom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+}
+
+.zoom-modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Toolbar atas untuk kontrol zoom */
+.zoom-toolbar {
+    height: 50px;
+    background-color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 20px;
+    gap: 10px;
+    z-index: 10000;
+}
+
+.zoom-toolbar button {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+.zoom-toolbar button:hover {
+    background: #008080; /* Warna aksen sesuai tema BSI */
+}
+
+/* Viewport & Area Render Canvas */
+.zoom-viewport {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.zoom-viewport:active {
+    cursor: grabbing;
+}
+
+.zoom-container {
+    display: flex;
+    gap: 15px;
+    transform-origin: center center;
+    transition: transform 0.1s cubic-bezier(0.1, 0.57, 0.1, 1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.zoom-page-canvas {
+    max-height: 85vh;
+    width: auto;
+    background: #fff;
+    border-radius: 2px;
+}
+
+
+/* Container Logo Kanan Bawah */
+.footer-logo {
+    position: fixed;
+    bottom: 50px;
+    right: 45px;
+    z-index: 999;
+    pointer-events: none;
+    width: 10%;
+    height: 70px;
+}
+
+.footer-logo img {
+    width: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+
+
+
+
+
+/* Style Dasar Top Header (Desktop) */
+.top-header {
+    width: 100%;
+    height: 50px;
+    background-color: #0066c0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+/* Sembunyikan logo header di tampilan Desktop */
+.header-logo img {
+    display: none;
+    width: auto;
+    object-fit: contain;
+}
+
+.top-page-counter {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   MEDIA QUERY KHUSUS MOBILE (< 768px)
+   ========================================================= */
+@media (max-width: 768px) {
+    /* 1. Invert Header menjadi Warna Putih */
+    .top-header {
+        background-color: #ffffff !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        justify-content: center; /* Logo di tengah */
+        padding: 0 10px;
+    }
+
+    /* 2. TAMPILKAN LOGO DI MOBILE */
+    .header-logo img {
+        display: block !important; /* Paksa muncul di mobile */
+        height: 28px;
+    }
+
+    /* 3. Sembunyikan Page Counter Atas & Logo Footer */
+    .top-page-counter,
+    .footer-logo,
+    .bsi-page-counter {
+        display: none !important;
+    }
+
+    /* 4. Penyesuaian jarak viewer */
+    .viewer, #book-wrapper {
+        padding-top: 55px;
+        padding-bottom: 60px;
+    }
+}
