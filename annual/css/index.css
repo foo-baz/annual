@@ -239,32 +239,21 @@ body {
 .nav-btn {
     position: absolute;
     top: 50%;
-
     transform: translateY(-50%);
-
     width: 64px;
     height: 64px;
-
     border-radius: 50%;
-
-    background: rgba(255,255,255,.9);
-
-    box-shadow:
-        0 5px 20px rgba(0,0,0,.15);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 32px;
-
+    font-size: 24px;
     cursor: pointer;
-
     user-select: none;
-
     transition: .2s;
     z-index: 999;
+    color: #0857c3;
 }
+
 .page canvas {
     width: 100%;
     height: 100%;
@@ -1089,12 +1078,11 @@ i.fas.fa-search.fa-1x , i.fas.fa-chevron-right {
     color: #475569;
 }
 
-/* Pengaturan Desktop (Layar Lebar) */
-@media (min-width: 769px) {
-    .toc-pages-wrapper canvas {
-        width: 50%;
+
+@media (max-width: 1440px){
+    .nav-btn {
+        display: none !important;
     }
-    
 }
 
 /* Pengaturan Mobile (Layar Kecil) */
@@ -1105,14 +1093,18 @@ i.fas.fa-search.fa-1x , i.fas.fa-chevron-right {
         display: none;
     }
     .viewer {
-        padding-bottom: 80px;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
         height: 100vh;
         width: 100vw;
+        
     }
 
     #book {
         max-width: 95vw !important;
         max-height: 80vh !important;
+        margin-top: -20px !important;
     }
 
     /* Bayangan spine tengah dimatikan saat mode 1 halaman */
@@ -1140,6 +1132,11 @@ i.fas.fa-search.fa-1x , i.fas.fa-chevron-right {
     /* .bsi-toolbar{
         display: none;
     } */
+
+    .toc-pages-wrapper canvas {
+        width: 50%;
+    }
+
 
     #tocButton{
         display:flex;
@@ -1212,50 +1209,6 @@ i.fas.fa-search.fa-1x , i.fas.fa-chevron-right {
         width .25s ease;
     }
 
-    /* #leftThickness{
-
-        background:
-            repeating-linear-gradient(
-                to right,
-                #f8f8f8 0px,
-                #f1f1f1 1px,
-                #ffffff 2px,
-                #f6f6f6 3px
-            );
-
-        border-right:
-            1px solid rgba(0,0,0,.08);
-
-        box-shadow:
-            inset -1px 0 1px rgba(255,255,255,.7),
-            inset 1px 0 2px rgba(0,0,0,.08);
-
-        border-radius:
-            3px 0 0 3px;
-    } */
-
-    /* #rightThickness{
-
-        background:
-            repeating-linear-gradient(
-                to right,
-                #f8f8f8 0px,
-                #f1f1f1 1px,
-                #ffffff 2px,
-                #f6f6f6 3px
-            );
-
-        border-left:
-            1px solid rgba(0,0,0,.08);
-
-        box-shadow:
-            inset 1px 0 1px rgba(255,255,255,.7),
-            inset -1px 0 2px rgba(0,0,0,.08);
-
-        border-radius:
-            0 3px 3px 0;
-    } */
-
     #book {
     margin: 0 auto !important;
     position: relative;
@@ -1322,10 +1275,6 @@ i.fas.fa-search.fa-1x , i.fas.fa-chevron-right {
     .toc-actions .toc-item:hover{
 
         background:#e2e8f0;
-    }
-    
-    .viewer{
-        padding-bottom:70px;
     }
 
     .language-switcher{
@@ -1524,4 +1473,5 @@ i.fas.fa-search.fa-1x , i.fas.fa-chevron-right {
      #tocButton{
         display:none;
     }
+
 }

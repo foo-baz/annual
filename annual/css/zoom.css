@@ -146,22 +146,25 @@
         padding: 0 10px;
     }
 
-    /* 2. TAMPILKAN LOGO DI MOBILE */
-    .header-logo img {
-        display: block !important; /* Paksa muncul di mobile */
-        height: 28px;
+    .bsi-logo-section, .bsi-brand-title {
+        display: block !important;
+    }
+    
+    .footer-logo {
+        position: fixed;
+        bottom: 74px;
+        right: 45px;
+        z-index: 999;
+        pointer-events: none;
+        width: 22%;
+        
     }
 
     /* 3. Sembunyikan Page Counter Atas & Logo Footer */
     .top-page-counter,
-    .footer-logo,
     .bsi-page-counter {
         display: none !important;
     }
 
-    /* 4. Penyesuaian jarak viewer */
-    .viewer, #book-wrapper {
-        padding-top: 55px;
-        padding-bottom: 60px;
-    }
+    
 }

@@ -47,8 +47,8 @@ function positionButtons() {
     if (!bookEl || !prevBtn || !nextBtn) return;
 
     const rect = bookEl.getBoundingClientRect();
-    const leftPos = Math.max(20, rect.left - 70);
-    const rightPos = Math.min(window.innerWidth - 70, rect.right + 20);
+    const leftPos = Math.max(310, rect.left - 70);
+    const rightPos = Math.min(window.innerWidth - 350, rect.right + 20);
 
     prevBtn.style.left = `${leftPos}px`;
     nextBtn.style.left = `${rightPos}px`;
