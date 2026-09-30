@@ -146,11 +146,23 @@
         padding: 0 10px;
     }
 
-    .bsi-logo-section, .bsi-brand-title {
-        display: block !important;
+    .bsi-logo-section, .bsi-brand-title    {
+        display: flex !important;
+        width: 100%;
     }
-    
+
+    .header-logo {
+        display: flex;
+        width: 29%;
+    }
+    .header-logo img {
+        display: block;
+        width: 89%;
+        object-fit: contain;
+    }
+
     .footer-logo {
+        display: none;
         position: fixed;
         bottom: 74px;
         right: 45px;
